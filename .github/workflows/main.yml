@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.x
@@ -20,6 +18,12 @@ jobs:
         pip install selenium
         pip install pytest
         pip install webdriver-manager
+
+    - name: Start Flask server
+      run: |
+        python app.py &
+      env:
+        FLASK_ENV: development
 
     - name: Run tests
       run: |
