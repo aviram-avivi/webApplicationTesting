@@ -9,15 +9,21 @@ import pytest
 
 @pytest.fixture
 def browser():
-    # Set up ChromeDriver (assuming you're using webdriver-manager)
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run in headless mode
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+
     service = Service(ChromeDriverManager().install())
-    browser = webdriver.Chrome(service=service)
+    browser = webdriver.Chrome(service=service, options=chrome_options)
     yield browser
     browser.quit()
 
-# ... [Previous import statements and pytest fixture] ...
 
 def test_valid_input(browser):
     valid_names = ["Alice", "Bob", "Charlie"]
