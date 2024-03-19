@@ -18,6 +18,7 @@ jobs:
         pip install selenium
         pip install pytest
         pip install webdriver-manager
+        pip install requests  # Add this line to install the requests library for API testing
 
     - name: Start Flask server
       run: |
@@ -27,4 +28,6 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest
+        pytest test_app.py  
+        pytest test_api.py  
+
